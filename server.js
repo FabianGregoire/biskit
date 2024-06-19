@@ -7,8 +7,12 @@ const mangoose = mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopo
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
-app.use(express.json());
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/', (req, res) => res.send('API is working'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build/index.html'));
+  });
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => {
+console.log(`Server running on port ${port}`);
+});
